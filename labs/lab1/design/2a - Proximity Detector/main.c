@@ -7,7 +7,8 @@ CY_ISR(timerInterrupt)
     echoWidth = 65535 - Timer_1_ReadCounter();
     
     if(echoWidth <= 5000){
-        redEnable_Write(0);    
+        redEnable_Write(0); 
+        CyDelay(5000);
     }
     
     else{        
