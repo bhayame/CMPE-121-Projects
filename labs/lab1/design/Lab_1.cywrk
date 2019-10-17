@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize" version="5" xml_contents_version="3" name="Lab 1" persistent="Lab 1.cywrk" platform="NOT_USED">
+<current_project name=".\2a - Proximity Detector.cydsn\2a - Proximity Detector.cyprj" />
+<wrkspc_folders />
+<files />
+<projects>
+<v>.\1a - Component API Blink.cydsn\1a - Component API Blink.cyprj</v>
+<v>.\1a - Per-Pin Blink.cydsn\1a - Per-Pin Blink.cyprj</v>
+<v>.\1a - Control Register Blink.cydsn\1a - Control Register Blink.cyprj</v>
+<v>.\1b - LED Brightness Control.cydsn\1b - LED Brightness Control.cyprj</v>
+<v>.\2a - Proximity Detector.cydsn\2a - Proximity Detector.cyprj</v>
+<v>.\3 - Frequency Meter.cydsn\3 - Frequency Meter.cyprj</v>
+<v>.\2b - Proximity Detector with Lower Power.cydsn\2b - Proximity Detector with Lower Power.cyprj</v>
+<v>.\SleepTimer_Interrupt_Sleep01.cydsn\SleepTimer_Interrupt_Sleep01.cyprj</v>
+</projects>
+<workspace_id v="3b367899-39bd-46fa-9186-eaf8bc5537f2" />
+<WriteAppVersionLastSavedWith v="4.2.0.641" />
+<WriteAppMarketingVersionLastSavedWith v="4.2" />
+<CyGuid_dcbd9771-0334-43dc-9cc3-fe99dc3c5316 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize+CyPrjDependencyList" version="4">
+<wrkspc_dependencies />
+</CyGuid_dcbd9771-0334-43dc-9cc3-fe99dc3c5316>
+<CyGuid_63b68103-67f5-4406-8da6-5c8625765b82 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize+CyIgnoredSystemDepsList" version="1">
+<wrkspc_dependencies />
+</CyGuid_63b68103-67f5-4406-8da6-5c8625765b82>
+</CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd>
+</CyXmlSerializer>
