@@ -105,7 +105,7 @@ int main(void)
         LCD_Char_ClearDisplay();
         potValue = ADC_DelSig_Read32();
         LCD_Char_PrintString("PHASE SHIFT:");
-        LCD_Char_PrintNumber(abs((potValue/180)-360));
+        LCD_Char_PrintNumber(potValue/180);
         potValue = potValue / 512;
         CyDmaTdSetAddress(DMA_1_TD[0], LO16((uint32)&sineTable1[potValue]), LO16((uint32)VDAC8_1_Data_PTR));
         CyDelay(10);
