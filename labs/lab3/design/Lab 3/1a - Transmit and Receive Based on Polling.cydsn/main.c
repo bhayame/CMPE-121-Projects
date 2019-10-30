@@ -44,7 +44,7 @@ int main(void)
 			mismatchCount++;
 			}
 		}
-        LCD_Char_PrintString("ERRORS:");
+        LCD_Char_PrintString("MISMATCHES:");
         LCD_Char_PrintNumber(mismatchCount);
         LCD_Char_Position(1,0);
         LCD_Char_PrintString("TIME:");
