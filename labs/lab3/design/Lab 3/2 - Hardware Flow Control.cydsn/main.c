@@ -10,7 +10,7 @@ CY_ISR(txISR){
             CyDelay(1);
             finishedFlag = 1;
     }
-    if(txStatus && UART_TX_STS_FIFO_NOT_FULL == UART_TX_STS_FIFO_NOT_FULL){
+    if((txStatus & UART_TX_STS_FIFO_NOT_FULL) == UART_TX_STS_FIFO_NOT_FULL){
         UART_PutChar(transmitArray[transmitCount]);
         transmitCount++;      
     }
@@ -18,10 +18,10 @@ CY_ISR(txISR){
 
 CY_ISR(timerISR){
     uint8 rxStatus = UART_ReadRxStatus();
-    if(rxStatus && UART_RX_STS_OVERRUN == UART_RX_STS_OVERRUN){
+    if((rxStatus & UART_RX_STS_OVERRUN) == UART_RX_STS_OVERRUN){
         errorCount++;
     }
-    while(UART_ReadRxStatus() && UART_RX_STS_FIFO_NOTEMPTY == UART_RX_STS_FIFO_NOTEMPTY){
+    while((UART_ReadRxStatus() & UART_RX_STS_FIFO_NOTEMPTY) == UART_RX_STS_FIFO_NOTEMPTY){
         receiveArray[receiveCount] = UART_ReadRxData();
         receiveCount++;
     }
@@ -36,6 +36,7 @@ int main(void)
     
     CyGlobalIntEnable;
     Timer_Start();
+    Timer_WritePeriod(28800);           /*SET TO 1.2 ms from 0.5 ms*/
     LCD_Char_Start();
     txInterrupt_StartEx(txISR);
     timerInterrupt_StartEx(timerISR);
