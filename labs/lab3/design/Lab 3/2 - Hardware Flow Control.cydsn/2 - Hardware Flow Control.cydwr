@@ -252,7 +252,9 @@
   <Group key="DWRInstGuidMapping">
     <Group key="Pin">
       <Data key="2dae5de5-f834-4da0-ac2f-e0e4a800f94c/ed092b9b-d398-4703-be89-cebf998501f6" value="LCD_Char_LCDPort" />
+      <Data key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba" value="CTS_N" />
       <Data key="1425177d-0d0e-4468-8bcc-e638e5509a9b" value="Rx" />
+      <Data key="e851a3b9-efb8-48be-bbb8-b303b216c393" value="RTS_N" />
       <Data key="ed092b9b-d398-4703-be89-cebf998501f6" value="Tx" />
     </Group>
   </Group>
@@ -3363,9 +3365,19 @@
         <Data key="Port Format" value="2,6" />
       </Group>
     </Group>
+    <Group key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba">
+      <Group key="0">
+        <Data key="Port Format" value="15,5" />
+      </Group>
+    </Group>
     <Group key="1425177d-0d0e-4468-8bcc-e638e5509a9b">
       <Group key="0">
         <Data key="Port Format" value="0,0" />
+      </Group>
+    </Group>
+    <Group key="e851a3b9-efb8-48be-bbb8-b303b216c393">
+      <Group key="0">
+        <Data key="Port Format" value="0,2" />
       </Group>
     </Group>
     <Group key="ed092b9b-d398-4703-be89-cebf998501f6">
