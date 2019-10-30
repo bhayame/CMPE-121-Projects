@@ -21,3 +21,16 @@ a.out
 *.iso
 *.dll
 
+# Cypress
+*.cycdx
+*.cyfit
+*.cyprj.brand_000
+*.rpt
+*.svd
+*.html
+*.log
+*.cydsn
+*.cywrk.brand_000
+
+
+
