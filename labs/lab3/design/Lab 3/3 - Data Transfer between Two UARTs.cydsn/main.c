@@ -2,7 +2,7 @@
 #define BLOCK_SIZE 256
 
 static uint8 transmitArray[BLOCK_SIZE - 1], receiveArray[BLOCK_SIZE - 1] = {0};
-static uint16 transmitCount = 0, receiveCount = 0, mismatchCount = 0, throughput = 0;
+static uint16 transmitCount = 0, receiveCount = 0, mismatchCount = 0, throughput = 0, errorFree = 0;
 
 
 CY_ISR(primarytxISR){
@@ -10,21 +10,28 @@ CY_ISR(primarytxISR){
         primaryUART_PutChar(transmitArray[transmitCount]);
         transmitCount++;
         if(transmitCount == BLOCK_SIZE){
-        transmitCount = 0;
+            transmitCount = 0;
         }
     }
 }
 
 CY_ISR(primaryrxISR){
-    while((primaryUART_ReadRxStatus() & primaryUART_RX_STS_FIFO_NOTEMPTY) == primaryUART_RX_STS_FIFO_NOTEMPTY){
-        throughput++;
-        receiveArray[receiveCount] = primaryUART_GetChar();
-        if(receiveArray[receiveCount] != transmitArray[receiveCount]){
-            mismatchCount++;
+    if((primaryUART_ReadRxStatus() & primaryUART_RX_STS_PAR_ERROR) != primaryUART_RX_STS_PAR_ERROR){
+        if((primaryUART_ReadRxStatus() & primaryUART_RX_STS_STOP_ERROR) != primaryUART_RX_STS_STOP_ERROR){
+            errorFree = 1;
         }
-        receiveCount++;
-        if(receiveCount == BLOCK_SIZE){
-        receiveCount = 0;
+    }
+    if(errorFree == 1){
+        while((primaryUART_ReadRxStatus() & primaryUART_RX_STS_FIFO_NOTEMPTY) == primaryUART_RX_STS_FIFO_NOTEMPTY){
+            throughput++;
+            receiveArray[receiveCount] = primaryUART_GetChar();
+            if(receiveArray[receiveCount] != transmitArray[receiveCount]){
+                mismatchCount++;
+            }
+            receiveCount++;
+            if(receiveCount == BLOCK_SIZE){
+                receiveCount = 0;
+            }
         }
     }
 }
@@ -41,7 +48,7 @@ int main(void)
     int i;
     for (i = 0; i<BLOCK_SIZE; i++){
         transmitArray[i] = i%256;
-        }
+    }
     
     CyGlobalIntEnable;
     primaryUART_Start();
