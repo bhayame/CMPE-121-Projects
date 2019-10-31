@@ -1,3 +1,11 @@
+/*Brandon Hayame
+bhayame@ucsc.edu
+CMPE 121 FALL 19
+
+This program continuously transfers data in a series of two UARTs and detects the number of errors and 
+receive throughput, even when the UARTs are disconnected and reconnected.
+*/
+
 #include "project.h"
 #define BLOCK_SIZE 256
 

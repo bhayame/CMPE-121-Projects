@@ -1,3 +1,11 @@
+/*Brandon Hayame
+bhayame@ucsc.edu
+CMPE 121 FALL 19
+
+This program continuously transmits a 4096 byte array from one location in memory to another and 
+reports the number of errors and elapsed time using polling in the main loop.
+*/
+
 #include "project.h"
 
 #define BLOCK_SIZE 4096 
@@ -20,14 +28,14 @@ int main(void)
     for(;;)
     {
     
-    if(UART_ReadTxStatus() && UART_TX_STS_FIFO_NOT_FULL == UART_TX_STS_FIFO_NOT_FULL){
+    if((UART_ReadTxStatus() & UART_TX_STS_FIFO_NOT_FULL) == UART_TX_STS_FIFO_NOT_FULL){
         if(transmitCount < BLOCK_SIZE){
         UART_PutChar(transmitArray[transmitCount]);		/*Add byte to TX FIFO*/
         transmitCount++;
             }
         }
     
-    if(UART_ReadRxStatus() && UART_RX_STS_FIFO_NOTEMPTY == UART_RX_STS_FIFO_NOTEMPTY){
+    if((UART_ReadRxStatus() & UART_RX_STS_FIFO_NOTEMPTY) == UART_RX_STS_FIFO_NOTEMPTY){
         if(receiveCount < BLOCK_SIZE){
         receiveArray[receiveCount] = UART_GetChar();	/*Read from RX FIFO*/
             if(receiveCount == 0){

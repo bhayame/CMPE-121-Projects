@@ -1,3 +1,11 @@
+/*Brandon Hayame
+bhayame@ucsc.edu
+CMPE 121 FALL 19
+
+This program continuously transmits a 4096 byte array from one location in memory to another and 
+reports the number of errors and elapsed time using hardware interrupts.
+*/
+
 #include "project.h"
 #define BLOCK_SIZE 4096
 

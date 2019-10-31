@@ -1,3 +1,10 @@
+/*Brandon Hayame
+bhayame@ucsc.edu
+CMPE 121 FALL 19
+
+This program incorporates hardware flow control in a UART to maintain error-free status when transmitting
+faster than receiving in the UART.*/
+
 #include "project.h"
 #define BLOCK_SIZE 4096
 

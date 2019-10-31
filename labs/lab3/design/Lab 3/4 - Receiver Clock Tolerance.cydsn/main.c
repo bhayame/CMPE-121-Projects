@@ -1,3 +1,11 @@
+/*Brandon Hayame
+bhayame@ucsc.edu
+CMPE 121 FALL 19
+
+This program varies the baudrate between two UARTs to determine the maximum deviation in clock speed the UART
+may posess and still be useful.
+*/
+
 #include "project.h"
 #define BLOCK_SIZE 256
 
