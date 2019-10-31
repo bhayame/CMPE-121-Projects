@@ -3,7 +3,7 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize" version="5" xml_contents_version="3" name="Lab 3" persistent="Lab 3.cywrk" platform="NOT_USED">
-<current_project name=".\3 - Data Transfer between Two UARTs.cydsn\3 - Data Transfer between Two UARTs.cyprj" />
+<current_project name=".\4 - Receiver Clock Tolerance.cydsn\4 - Receiver Clock Tolerance.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
@@ -12,6 +12,7 @@
 <v>.\1b - Transmit and Receive Using Interrupts.cydsn\1b - Transmit and Receive Using Interrupts.cyprj</v>
 <v>.\2 - Hardware Flow Control.cydsn\2 - Hardware Flow Control.cyprj</v>
 <v>.\3 - Data Transfer between Two UARTs.cydsn\3 - Data Transfer between Two UARTs.cyprj</v>
+<v>.\4 - Receiver Clock Tolerance.cydsn\4 - Receiver Clock Tolerance.cyprj</v>
 </projects>
 <workspace_id v="72038d5e-6d7c-4d24-80f2-5825eb3fd7a0" />
 <WriteAppVersionLastSavedWith v="4.2.0.641" />
