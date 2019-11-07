@@ -3,6 +3,7 @@ bhayame@ucsc.edu
 
 This program receives data from a PSoC UART transmitting an 8-bit potentiometer value through and ADC and converts it to a PWM output on PWM pin 12 of the Rpi in order to control an LED's brightness.
 */
+
 #include <stdint.h>
 #include <string.h>
 #include <termios.h>
@@ -15,6 +16,7 @@ This program receives data from a PSoC UART transmitting an 8-bit potentiometer 
 
 #define LED_PIN    1
 #define BAUDRATE B115200
+#define BLOCK_SIZE 1
 
 int main(int argc, char * argv[]){
 
@@ -38,10 +40,10 @@ int main(int argc, char * argv[]){
   tcsetattr(fd, TCSANOW, &serial);
   
   while(1){
-    int rdcount = read(fd, rxbuffer, 1);
+    int rdcount = read(fd, rxbuffer, BLOCK_SIZE);
     if(rdcount < 0){
       if(errno != EAGAIN){
-	return -1;
+	    return -1;
       }
     }
     else{
