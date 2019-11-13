@@ -24,7 +24,7 @@ int main (int argc, char * argv[]){
   libusb_device_handle* dev; // Pointer to data structure representing USB device
 
   int rcvd_bytes; // Bytes received
-  int return_val, rx_data = 0;
+  char return_val, rx_data[1];
 
   libusb_init(NULL); // Initialize the LIBUSB library
 
@@ -59,7 +59,9 @@ int main (int argc, char * argv[]){
 
 	while(1){
 		return_val = libusb_bulk_transfer(dev, (0x01 | 0x80), rx_data, 1, &rcvd_bytes, 0);
-		pwmWrite(LED_PIN, rx_data * 4);
+		if (return_val == 0){
+      pwmWrite(LED_PIN, rx_data[0] * 4);
+    }
 }
   libusb_close(dev);
 
