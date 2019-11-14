@@ -114,23 +114,23 @@ int main(void)
         /* IN transfer polling */
         if(adcBuffer == BUFFER_0){
             while (USBFS_GetEPState(IN_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
-            USBFS_LoadInEP(IN_EP_NUM, ADCbuffer1, 64);
+            USBFS_LoadInEP(IN_EP_NUM, ADCbuffer1, BLOCK_SIZE);
         }
         if(adcBuffer == BUFFER_1){
             while (USBFS_GetEPState(IN_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
-            USBFS_LoadInEP(IN_EP_NUM, ADCbuffer0, 64);    
+            USBFS_LoadInEP(IN_EP_NUM, ADCbuffer0, BLOCK_SIZE);    
         }
        
         /* OUT transfer polling */
         if(dacBuffer == BUFFER_0){
             if (USBFS_GetEPState(OUT_EP_NUM) == USBFS_OUT_BUFFER_FULL){
-                USBFS_ReadOutEP(OUT_EP_NUM, DACbuffer1, 64);
+                USBFS_ReadOutEP(OUT_EP_NUM, DACbuffer1, BLOCK_SIZE);
                 while (USBFS_GetEPState(OUT_EP_NUM) == USBFS_OUT_BUFFER_FULL){}
             }
         }
         if(dacBuffer == BUFFER_1){
             if (USBFS_GetEPState(OUT_EP_NUM) == USBFS_OUT_BUFFER_FULL){
-                USBFS_ReadOutEP(OUT_EP_NUM, DACbuffer0, 64);
+                USBFS_ReadOutEP(OUT_EP_NUM, DACbuffer0, BLOCK_SIZE);
                 while (USBFS_GetEPState(OUT_EP_NUM) == USBFS_OUT_BUFFER_FULL){}
             }
         }             
