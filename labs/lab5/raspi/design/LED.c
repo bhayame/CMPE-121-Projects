@@ -60,6 +60,9 @@ int main (int argc, char * argv[]){
 	while(1){
 		return_val = libusb_bulk_transfer(dev, (0x01 | 0x80), rx_data, 1, &rcvd_bytes, 0);
 		if (return_val == 0){
+      if(rx_data[0] <= 10){
+        rx_data[0] = 0;
+        }
       pwmWrite(LED_PIN, rx_data[0] * 4);
     }
 }
