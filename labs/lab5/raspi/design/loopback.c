@@ -21,7 +21,7 @@ int main (int argc, char * argv[]){
 
   int sent_bytes; // Bytes transmitted
   int rcvd_bytes; // Bytes received
-  char rx_data[64], tx_data[64];
+  char rx_data[64] = {0};
   int return_val;
 
   libusb_init(NULL); // Initialize the LIBUSB library
@@ -56,7 +56,6 @@ int main (int argc, char * argv[]){
 	while(1){
 		return_val = libusb_bulk_transfer(dev, (0x01 | 0x80), rx_data, 64, &rcvd_bytes, 0);
 		if(return_val == 0){
-			return_val = libusb_bulk_transfer(dev, 0x02, rx_data, 64, &rcvd_bytes, 0);
 			printf("%d bytes received\n", rcvd_bytes);
 			for (int i=0; i<rcvd_bytes; i++){
 				printf("%02x ", rx_data[i]);
@@ -64,9 +63,23 @@ int main (int argc, char * argv[]){
 				}
 			printf("\n");
 		}
+		else {
+		  printf("ERROR: return_val != 0\n");
+		}
+		return_val = libusb_bulk_transfer(dev, 0x02, rx_data, 64, &sent_bytes, 0);
+		if(return_val == 0){
+		  printf("%d bytes transmitted\n", sent_bytes);
+		  for (int i=0; i<sent_bytes; i++){
+		    printf("%02x ", rx_data[i]);
+		    if (i % 16 == 15) printf("\n");
+		  }
+		  printf("\n");
+		}
+		else {
+		  printf("ERROR: return_val != 0\n");
+		}
 	}
-	
-  libusb_close(dev);
+	libusb_close(dev);	
 }
 
 
