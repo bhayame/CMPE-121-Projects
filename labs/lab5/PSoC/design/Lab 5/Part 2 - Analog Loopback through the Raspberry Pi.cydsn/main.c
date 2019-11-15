@@ -3,7 +3,6 @@ Brandon Hayame
 bhayame@ucsc.edu
 This program converts an analog signal to digital, and transmits it across USB to a Rpi,
 and waits to receive the same signal back from it.
-
 */
 
 #include "project.h"
@@ -86,8 +85,8 @@ int main(void)
     adcDMA_TD[1] = CyDmaTdAllocate();
     CyDmaTdSetConfiguration(adcDMA_TD[0], BLOCK_SIZE, adcDMA_TD[1], adcDMA__TD_TERMOUT_EN | CY_DMA_TD_INC_DST_ADR);
     CyDmaTdSetConfiguration(adcDMA_TD[1], BLOCK_SIZE, adcDMA_TD[0], adcDMA__TD_TERMOUT_EN | CY_DMA_TD_INC_DST_ADR);
-    CyDmaTdSetAddress(adcDMA_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)&ADCbuffer0[0]));
-    CyDmaTdSetAddress(adcDMA_TD[1], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)&ADCbuffer1[0]));
+    CyDmaTdSetAddress(adcDMA_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)ADCbuffer0));
+    CyDmaTdSetAddress(adcDMA_TD[1], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)ADCbuffer1));
     CyDmaChSetInitialTd(adcDMA_Chan, adcDMA_TD[0]);
     CyDmaChEnable(adcDMA_Chan, 1);    
     
@@ -97,14 +96,13 @@ int main(void)
     dacDMA_TD[1] = CyDmaTdAllocate();
     CyDmaTdSetConfiguration(dacDMA_TD[0], BLOCK_SIZE, dacDMA_TD[1], dacDMA__TD_TERMOUT_EN | CY_DMA_TD_INC_SRC_ADR);
     CyDmaTdSetConfiguration(dacDMA_TD[1], BLOCK_SIZE, dacDMA_TD[0], dacDMA__TD_TERMOUT_EN | CY_DMA_TD_INC_SRC_ADR);
-    CyDmaTdSetAddress(dacDMA_TD[0], LO16((uint32)&DACbuffer0[0]), LO16((uint32)VDAC_Data_PTR));
-    CyDmaTdSetAddress(dacDMA_TD[1], LO16((uint32)&DACbuffer1[0]), LO16((uint32)VDAC_Data_PTR));
+    CyDmaTdSetAddress(dacDMA_TD[0], LO16((uint32)DACbuffer0), LO16((uint32)VDAC_Data_PTR));
+    CyDmaTdSetAddress(dacDMA_TD[1], LO16((uint32)DACbuffer1), LO16((uint32)VDAC_Data_PTR));
     CyDmaChSetInitialTd(dacDMA_Chan, dacDMA_TD[0]);
     CyDmaChEnable(dacDMA_Chan, 1);   
 
     for(;;)
     {   
-        LCD_Char_PrintNumber(ADCbuffer0[0]);
         if (USBFS_IsConfigurationChanged()){
             if (USBFS_GetConfiguration()){
                 USBFS_EnableOutEP(OUT_EP_NUM);
