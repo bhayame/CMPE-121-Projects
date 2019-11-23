@@ -1,0 +1,35 @@
+# Files to ignore while saving
+# C ignores
+*.o
+*.a
+*.so
+a.out
+# Editor backup files
+*.bak
+*.swp
+*.swo
+*~
+# Others
+*.tar
+*.tar.gz
+*.zip
+*.exe
+*.tgz
+*.pkg
+*.dmg
+*.img
+*.iso
+*.dll
+
+# Cypress
+*.cycdx
+*.cyfit
+*.cyprj.brand_000
+*.rpt
+*.svd
+*.html
+*.log
+*.cywrk.brand_000
+
+
+
