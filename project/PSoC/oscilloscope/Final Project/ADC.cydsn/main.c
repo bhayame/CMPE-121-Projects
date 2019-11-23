@@ -19,24 +19,36 @@ potentiometers to a multiplexed Delta Sigma ADC to control phase shift of a wave
 #define USBFS_DEVICE  (0u)
 
 /* Active endpoints of USB device. */
-#define IN_EP_NUM     (1u)
-#define OUT_EP_NUM    (2u)
+#define CHAN_1_EP_NUM     (1u)
+#define CHAN_2_EP_NUM    (2u)
 
+/* General defines */
 #define BLOCK_SIZE 64
-#define BUFFER_0 0
-#define BUFFER_1 1
+#define ARRAY_0 0
+#define ARRAY_1 1
+
+static unsigned char ADC_Chan_1_Array_0[BLOCK_SIZE], ADC_Chan_1_Array_1[BLOCK_SIZE], 
+                     ADC_Chan_2_Array_0[BLOCK_SIZE], ADC_Chan_2_Array_1[BLOCK_SIZE];                  
+static int ADC_Chan_1_CurrentArray = 0, ADC_Chan_2_CurrentArray = 0;                    
 
 CY_ISR(Chan_1_DMA_ISR){
-
+    if(ADC_Chan_1_CurrentArray == ARRAY_0){
+        ADC_Chan_1_CurrentArray = ARRAY_1;    
+    }
+    else if(ADC_Chan_1_CurrentArray == ARRAY_1){
+        ADC_Chan_1_CurrentArray = ARRAY_0;        
+    }
 }
 
 CY_ISR(Chan_2_DMA_ISR){
-
-}
-
-static unsigned char ADC_Chan_1_Array_0[BLOCK_SIZE], ADC_Chan_1_Array_1[BLOCK_SIZE],
-                     ADC_Chan_2_Array_0[BLOCK_SIZE], ADC_Chan_2_Array_1[BLOCK_SIZE];
-
+    if(ADC_Chan_2_CurrentArray == ARRAY_0){
+        ADC_Chan_2_CurrentArray = ARRAY_1;    
+    }
+    else if(ADC_Chan_2_CurrentArray == ARRAY_1){
+        ADC_Chan_2_CurrentArray = ARRAY_0;        
+    }
+}            
+                    
 int main(void)
 {   
     CyGlobalIntEnable;
@@ -54,7 +66,6 @@ int main(void)
     /* START USBFS */
     USBFS_Start(USBFS_DEVICE, USBFS_5V_OPERATION);
     while (!USBFS_GetConfiguration()){};
-    USBFS_EnableOutEP(OUT_EP_NUM);
 
     /* Variable declarations for Chan_1_DMA */
     uint8 Chan_1_DMA_Chan;
@@ -87,8 +98,24 @@ int main(void)
     CyDmaChEnable(Chan_2_DMA_Chan, 1);
     
     for(;;)
-    {
-
+    {        
+        /* IN Transfer Polling */
+        if(ADC_Chan_1_CurrentArray == ARRAY_0){
+            while (USBFS_GetEPState(CHAN_1_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
+            USBFS_LoadInEP(CHAN_1_EP_NUM, ADC_Chan_1_Array_1, BLOCK_SIZE);
+        }
+        if(ADC_Chan_1_CurrentArray == ARRAY_1){
+            while (USBFS_GetEPState(CHAN_1_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
+            USBFS_LoadInEP(CHAN_1_EP_NUM, ADC_Chan_1_Array_0, BLOCK_SIZE);
+        }
+        if(ADC_Chan_2_CurrentArray == ARRAY_0){
+            while (USBFS_GetEPState(CHAN_2_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
+            USBFS_LoadInEP(CHAN_2_EP_NUM, ADC_Chan_2_Array_1, BLOCK_SIZE);
+        }
+        if(ADC_Chan_2_CurrentArray == ARRAY_1){
+            while (USBFS_GetEPState(CHAN_2_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
+            USBFS_LoadInEP(CHAN_2_EP_NUM, ADC_Chan_2_Array_0, BLOCK_SIZE);
+        }
     }
 }
 
