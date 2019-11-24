@@ -30,6 +30,8 @@ potentiometers to a multiplexed Delta Sigma ADC to control phase shift of a wave
 #define BLOCK_SIZE 64
 #define ARRAY_0 0
 #define ARRAY_1 1
+#define CHANNEL_1 0
+#define CHANNEL_2 1
 
 static unsigned char ADC_Chan_1_Array_0[BLOCK_SIZE], ADC_Chan_1_Array_1[BLOCK_SIZE], 
                      ADC_Chan_2_Array_0[BLOCK_SIZE], ADC_Chan_2_Array_1[BLOCK_SIZE];                  
@@ -76,6 +78,9 @@ int main(void)
     ADC_Chan_1_StartConvert();
     ADC_Chan_2_Start();
     ADC_Chan_2_StartConvert();
+    ADC_DelSig_Start();
+    AMux_Start();
+    
     
     /* START INTERRUPTS */
     Chan_1_DMA_Interrupt_StartEx(Chan_1_DMA_ISR);
@@ -154,7 +159,11 @@ int main(void)
             
                 CyGlobalIntDisable;
             
-                /* SEND BOTH POTENTIOMETER ADC VALUES */
+                /* Send both potentiometer ADC values */
+                AMux_FastSelect(CHANNEL_1);
+                read_buffer[CHANNEL_1] = ADC_DelSig_Read16();
+                AMux_FastSelect(CHANNEL_2);
+                read_buffer[CHANNEL_2] = ADC_DelSig_Read16();
             
                 CyGlobalIntEnable;
             }
