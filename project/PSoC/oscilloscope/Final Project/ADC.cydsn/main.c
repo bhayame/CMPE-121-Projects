@@ -22,6 +22,10 @@ potentiometers to a multiplexed Delta Sigma ADC to control phase shift of a wave
 #define CHAN_1_EP_NUM     (1u)
 #define CHAN_2_EP_NUM    (2u)
 
+/* I2C Buffer defines */
+#define RD_BUFFER_SIZE        (2u)
+#define WR_BUFFER_SIZE        (1u)
+
 /* General defines */
 #define BLOCK_SIZE 64
 #define ARRAY_0 0
@@ -51,12 +55,26 @@ CY_ISR(Chan_2_DMA_ISR){
                     
 int main(void)
 {   
+    
+    /* Variable declarations for Chan_1_DMA */
+    uint8 Chan_1_DMA_Chan;
+    uint8 Chan_1_DMA_TD[2];
+    
+    /* Variable declarations for Chan_2_DMA */
+    uint8 Chan_2_DMA_Chan;
+    uint8 Chan_2_DMA_TD[2];
+    
+    /* I2C VARIABLE DECLARATIONS */
+    uint8 read_buffer[RD_BUFFER_SIZE] = {0};
+    uint8 write_buffer[WR_BUFFER_SIZE] = {0};
+    uint8 command_reg = 0, readCount = 0;
+    
     CyGlobalIntEnable;
     
     /* START ADCS AND CONVERSION */
     ADC_Chan_1_Start();
-    ADC_Chan_2_Start();
     ADC_Chan_1_StartConvert();
+    ADC_Chan_2_Start();
     ADC_Chan_2_StartConvert();
     
     /* START INTERRUPTS */
@@ -66,14 +84,11 @@ int main(void)
     /* START USBFS */
     USBFS_Start(USBFS_DEVICE, USBFS_5V_OPERATION);
     while (!USBFS_GetConfiguration()){};
-
-    /* Variable declarations for Chan_1_DMA */
-    uint8 Chan_1_DMA_Chan;
-    uint8 Chan_1_DMA_TD[2];
     
-    /* Variable declarations for Chan_2_DMA */
-    uint8 Chan_2_DMA_Chan;
-    uint8 Chan_2_DMA_TD[2];
+    /* START I2C */
+    I2C_SlaveInitWriteBuf((uint8 *) write_buffer, WR_BUFFER_SIZE);   
+    I2C_SlaveInitReadBuf((uint8 *) read_buffer, RD_BUFFER_SIZE);
+    I2C_Start();
 
     /* DMA Configuration for Chan_1_DMA */
     Chan_1_DMA_Chan = Chan_1_DMA_DmaInitialize(DMA_BYTES_PER_BURST, DMA_REQUEST_PER_BURST, HI16(DMA_SRC_BASE), HI16(DMA_DST_BASE));
@@ -116,6 +131,33 @@ int main(void)
             while (USBFS_GetEPState(CHAN_2_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
             USBFS_LoadInEP(CHAN_2_EP_NUM, ADC_Chan_2_Array_0, BLOCK_SIZE);
         }
+        
+        /* Poll if RPi has written to buffer */
+        if(I2C_SlaveStatus() & I2C_SSTAT_WR_CMPLT){
+            /* Read from buffer and write to command register */ 
+            command_reg = write_buffer[0];
+            
+            /* Clear status */
+            I2C_SlaveClearWriteStatus();
+            I2C_SlaveClearWriteBuf();
+            
+            /* CODE HERE TO INTERPRET command_reg AND TAKE ACTION */
+        }
+        
+        /* Poll if RPi has read from buffer */
+        if(I2C_SlaveStatus() & I2C_SSTAT_RD_CMPLT){
+            readCount = I2C_SlaveGetReadBufSize();
+            if(readCount == RD_BUFFER_SIZE){
+                /* Clear status */
+                I2C_SlaveClearReadStatus();
+                I2C_SlaveClearReadBuf();
+            
+                CyGlobalIntDisable;
+            
+                /* SEND BOTH POTENTIOMETER ADC VALUES */
+            
+                CyGlobalIntEnable;
+            }
+        }
     }
 }
-
