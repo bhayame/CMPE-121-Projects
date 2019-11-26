@@ -87,8 +87,8 @@ int main(void)
     Chan_2_DMA_Interrupt_StartEx(Chan_2_DMA_ISR);
     
     /* START USBFS */
-    USBFS_Start(USBFS_DEVICE, USBFS_5V_OPERATION);
-    while (!USBFS_GetConfiguration()){};
+    /*USBFS_Start(USBFS_DEVICE, USBFS_5V_OPERATION);
+    while (!USBFS_GetConfiguration()){};*/
     
     /* START I2C */
     I2C_SlaveInitWriteBuf((uint8 *) write_buffer, WR_BUFFER_SIZE);   
@@ -119,7 +119,7 @@ int main(void)
     
     for(;;)
     {        
-        /* IN Transfer Polling */
+        /* IN Transfer Polling *//*
         if(ADC_Chan_1_CurrentArray == ARRAY_0){
             while (USBFS_GetEPState(CHAN_1_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
             USBFS_LoadInEP(CHAN_1_EP_NUM, ADC_Chan_1_Array_1, BLOCK_SIZE);
@@ -136,7 +136,7 @@ int main(void)
             while (USBFS_GetEPState(CHAN_2_EP_NUM) != USBFS_IN_BUFFER_EMPTY){}
             USBFS_LoadInEP(CHAN_2_EP_NUM, ADC_Chan_2_Array_0, BLOCK_SIZE);
         }
-        
+        */
         /* Poll if RPi has written to buffer */
         if(I2C_SlaveStatus() & I2C_SSTAT_WR_CMPLT){
             /* Read from buffer and write to command register */ 
@@ -161,9 +161,9 @@ int main(void)
             
                 /* Send both potentiometer ADC values */
                 AMux_FastSelect(CHANNEL_1);
-                read_buffer[CHANNEL_1] = ADC_DelSig_Read16();
+                read_buffer[0] = ADC_DelSig_Read16();
                 AMux_FastSelect(CHANNEL_2);
-                read_buffer[CHANNEL_2] = ADC_DelSig_Read16();
+                read_buffer[1] = ADC_DelSig_Read16();
             
                 CyGlobalIntEnable;
             }
