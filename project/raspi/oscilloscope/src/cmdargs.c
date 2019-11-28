@@ -18,7 +18,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.mode = optarg;
 						printf("userParameters.mode = %s\n", userParameters.mode);
 					}
-					else printf("ERROR: <mode> must be either 'free' or 'trigger'.\n");
+					else{
+						printf("ERROR: <mode> must be either 'free' or 'trigger'.\n");
+						return 0;
+					}
 					break;
 					
 				case 't' :		// <trigger-level> (0 - 5000 in steps of 100 mV, default 2500)
@@ -27,9 +30,15 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 							userParameters.triggerLevel = argValue;
 							printf("userParameters.triggerLevel = %d\n", userParameters.triggerLevel);
 						}
-						else printf ("ERROR: <trigger-level> must be in increments of 100.\n");
+						else{
+							printf ("ERROR: <trigger-level> must be in increments of 100.\n");
+							return 0;
+						}
 					}
-					else printf("ERROR: <trigger-level> must be between 0 and 5000.\n");
+					else{
+						printf("ERROR: <trigger-level> must be between 0 and 5000.\n");
+						return 0;
+					}
 					break;
 					
 				case 's' :		// <trigger-slope> (pos or neg, default pos)
@@ -37,7 +46,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.triggerSlope = optarg;
 						printf("userParameters.triggerSlope = %s\n", userParameters.triggerSlope);
 					}
-					else printf("ERROR: <trigger-slope> must be either 'pos' or 'neg'.\n");					
+					else{
+						printf("ERROR: <trigger-slope> must be either 'pos' or 'neg'.\n");					
+						return 0;
+				    }
 					break;
 					
 				case 'r' :		// <sample-rate> (1, 10, 20, 50, 100 ksamples/sec)
@@ -45,7 +57,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.sampleRate = argValue;
 						printf("userParameters.sampleRate = %d\n", userParameters.sampleRate);
 						}
-					else printf("ERROR: <sample-rate> must be '1', '10', '20', '50', or '100'.\n");
+					else{
+						printf("ERROR: <sample-rate> must be '1', '10', '20', '50', or '100'.\n");
+						return 0;
+					}
 					break;
 					
 				case 'c' :		// <trigger-channel> (1 or 2, default 1)
@@ -53,7 +68,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.triggerChannel = argValue;
 						printf("userParameters.triggerChannel = %d\n", userParameters.triggerChannel);
 					}
-					else printf("ERROR: <trigger-channel> must be either '1' or '2'.\n");
+					else{ 
+						printf("ERROR: <trigger-channel> must be either '1' or '2'.\n");
+						return 0;
+					}
 					break;
 					
 				case 'x' :		// <xscale> (100, 500, 1000, 2000, 5000, 10000, 50000, or 100000 usec, default 1000)
@@ -62,7 +80,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.xscale = argValue;
 						printf("userParameters.xscale = %d\n", userParameters.xscale);
 					}
-					else printf("ERROR: <xscale> must be '100', '500', '1000', '2000', '5000', '10000', '50000', or '100000'.\n");			
+					else{
+						printf("ERROR: <xscale> must be '100', '500', '1000', '2000', '5000', '10000', '50000', or '100000'.\n");			
+						return 0;
+					}
 					break;
 					
 				case 'y' :		// <yscale> (100, 500, 1000, 2000, or 2500 mV/div, default 1000)
@@ -70,7 +91,10 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 						userParameters.yscale = argValue;
 						printf("userParameters.yscale = %d\n", userParameters.yscale);
 					}
-					else printf("ERROR: <yscale> must be '100', '500', '1000', '2000', or '2500'.\n");
+					else{
+						printf("ERROR: <yscale> must be '100', '500', '1000', '2000', or '2500'.\n");
+						return 0;
+					}
 					break;
 				
 				default :
@@ -78,4 +102,5 @@ int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 					printf("myscope -m <mode> -t <trigger-level> -s <trigger-slope> -r <sample-rate> -c <trigger-channel> -x <xscale> -y <yscale>\n");
 			}
 	}
+	return 1;
 }	
