@@ -17,7 +17,7 @@ bhayame@ucsc.edu
 /*This function takes in a scopeParameters struct, as well as the argument counts and values of the main function, and 
  *populates the struct with the scope run parameters to be used elsewhere. */
 
-int cmdParse(struct scopeParameters* userParameters, int argc, char* argv[]){
+int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 	int opt, argValue;
 	
 	//Set default scope parameters to be changed if needed

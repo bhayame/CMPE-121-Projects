@@ -13,7 +13,7 @@
 #include "scope.h"
 
 int main(int argc, char* argv[]){
-	struct scopeParameters userParameters;		//Create struct to store user scope parameters from cmdargs
+	scopeParameters userParameters;		//Create struct to store user scope parameters from cmdargs
 	if (cmdParse(&userParameters, argc, argv) == 1){		//Populate userParameters with arguments and check for success
 		printf("userParameters.mode = %s\n", userParameters.mode);
 		printf("userParameters.triggerLevel = %d\n", userParameters.triggerLevel);

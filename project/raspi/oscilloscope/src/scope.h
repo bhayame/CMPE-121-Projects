@@ -7,9 +7,9 @@ rpi side of the oscilloscope project.
 
 //Struct and function defintions for cmdargs.c
 
-struct scopeParameters{
+typedef struct{
 	char* mode, *triggerSlope; 
 	int triggerLevel, sampleRate, triggerChannel, xscale, yscale;
-};
+}scopeParameters;
 
-int cmdParse(struct scopeParameters* userParameters, int argc, char* argv[]);
+int cmdParse(scopeParameters* userParameters, int argc, char* argv[]);
