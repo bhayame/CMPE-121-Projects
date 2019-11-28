@@ -7,9 +7,8 @@
 
 #define OPTION_LIST "m:t:s:r:c:x:y"
 
-struct scopeParameters cmdParse(int argc, char* argv[]){
+int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]){
 	int opt, argValue;
-	struct scopeParameters userParameters;
 	
 	while ((opt = getopt(argc, argv, OPTION_LIST)) != -1){
 			argValue = atoi(optarg);

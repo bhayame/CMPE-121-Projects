@@ -5,4 +5,4 @@ struct scopeParameters{
 	int triggerLevel, sampleRate, triggerChannel, xscale, yscale;
 };
 
-struct scopeParameters cmdParse(int argc, char* argv[]);
+int cmdParse(struct scopeParameters userParameters, int argc, char* argv[]);

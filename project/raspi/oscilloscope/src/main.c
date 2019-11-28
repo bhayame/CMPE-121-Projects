@@ -5,5 +5,6 @@
 #include "scope.h"
 
 int main(int argc, char* argv[]){
-	cmdParse(argc, argv);
+	struct scopeParameters userParameters;
+	cmdParse(userParameters, argc, argv);
 }
