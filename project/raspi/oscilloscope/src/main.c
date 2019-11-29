@@ -14,8 +14,8 @@
 
 int main(int argc, char* argv[]){
 	scopeParameters userParameters;		//Create struct to store user scope parameters from cmdargs
-	if (cmdParse(&userParameters, argc, argv) != 1){		//Populate userParameters with arguments and check for success
-		return 0;
+	if (cmdParse(&userParameters, argc, argv) != 0){		//Populate userParameters with arguments and check for success
+		return 1;
 	}
 	
 	for(;;){

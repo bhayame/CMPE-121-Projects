@@ -39,7 +39,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					}
 					else{
 						printf("ERROR: <mode> must be either 'free' or 'trigger'.\n");
-						return 0;
+						return 1;
 					}
 					break;
 					
@@ -50,12 +50,12 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 						}
 						else{
 							printf ("ERROR: <trigger-level> must be in increments of 100.\n");
-							return 0;
+							return 1;
 						}
 					}
 					else{
 						printf("ERROR: <trigger-level> must be between 0 and 5000.\n");
-						return 0;
+						return 1;
 					}
 					break;
 					
@@ -65,7 +65,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					}
 					else{
 						printf("ERROR: <trigger-slope> must be either 'pos' or 'neg'.\n");					
-						return 0;
+						return 1;
 				    }
 					break;
 					
@@ -75,7 +75,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 						}
 					else{
 						printf("ERROR: <sample-rate> must be '1', '10', '20', '50', or '100'.\n");
-						return 0;
+						return 1;
 					}
 					break;
 					
@@ -85,7 +85,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					}
 					else{ 
 						printf("ERROR: <trigger-channel> must be either '1' or '2'.\n");
-						return 0;
+						return 1;
 					}
 					break;
 					
@@ -96,7 +96,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					}
 					else{
 						printf("ERROR: <xscale> must be '100', '500', '1000', '2000', '5000', '10000', '50000', or '100000'.\n");			
-						return 0;
+						return 1;
 					}
 					break;
 					
@@ -106,7 +106,7 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					}
 					else{
 						printf("ERROR: <yscale> must be '100', '500', '1000', '2000', or '2500'.\n");
-						return 0;
+						return 1;
 					}
 					break;
 				
@@ -115,5 +115,5 @@ int cmdParse(scopeParameters* userParameters, int argc, char* argv[]){
 					printf("myscope -m <mode> -t <trigger-level> -s <trigger-slope> -r <sample-rate> -c <trigger-channel> -x <xscale> -y <yscale>\n");
 			}
 	}
-	return 1;
+	return 0;
 }	
