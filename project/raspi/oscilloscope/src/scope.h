@@ -32,3 +32,8 @@ void printScaleSettings(int xscale, int yscale, int xposition, int yposition, VG
 void processSamples(int *data, int nsamples, int xstart, int xfinish, float yscale, data_point *point_array);
 
 void plotWave(data_point *data, int nsamples, int yoffset, VGfloat linecolor[4]);
+
+
+//Function definitions for usbcomm.c
+
+void USB_Start();
