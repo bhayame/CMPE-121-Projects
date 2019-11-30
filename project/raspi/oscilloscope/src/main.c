@@ -49,16 +49,23 @@ int main(int argc, char* argv[]){
     fd = wiringPiI2CSetup(I2C_SLAVE_ADDR);
     if (fd == -1){
 		perror("I2C device not found\n");
+		return 1;
     }
+    
+	libusb_device_handle *dev;
+	if (USB_Start(dev); != 0){		//Start USB Configuration
+		perror("USB configuration failed\n");
+		return 1;
+	}
 	
 	samples_per_screen = (userParameters.xscale * userParameters.sampleRate * xdiv / 1000);		//Calculate # of samples needed to populate screen
+	
+	/* SEND I2C COMMAND TO SET SAMPLE RATE AND START SAMPLING */
 	
 	saveterm(); // Save current screen
 	init(&width, &height); // Initialize display and get width and height
 	Start(width, height);
 	rawterm(); // Needed to receive control characters from keyboard, such as ESC
-	
-	/* SET UP USB */
 	
 	for(;;){
 		if(strcmp(userParameters.mode, "free") ==0){
@@ -84,5 +91,9 @@ int main(int argc, char* argv[]){
 		plotWave(channel1_points, samples_per_screen, pot1_data, wave1color);		
 		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);
 	}
-	/*   libusb_close(dev); */
+	waituntil(0x1b); // Wait for user to press ESC or RET key
+	restoreterm();
+	finish();
+	
+	libusb_close(dev);	//Close USB device when finished
 }
