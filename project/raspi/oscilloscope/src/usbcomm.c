@@ -43,3 +43,28 @@ void USB_Start(){
 		perror("Cannot claim interface");
 	}
 }
+
+USB_GetBlock(int channelNumber, char* rx_data[]){
+	int return_val, rcvd_bytes;
+	
+	if(channelNumber == 1){
+		return_val = libusb_bulk_transfer(dev, // Handle for the USB device
+					(0x01 | 0x80), // Address of the Endpoint in USB device
+				    // MS bit nust be 1 for IN transfers
+				    rx_data, // address of receive data buffer
+				    64, // Size of data buffer
+				    &rcvd_bytes, // Number of bytes actually received
+				    0 // Timeout in milliseconds (0 to disable timeout)
+				    );
+	}
+	else if(channelNumber == 2){
+		return_val = libusb_bulk_transfer(dev, // Handle for the USB device
+					(0x02 | 0x80), // Address of the Endpoint in USB device
+				    // MS bit nust be 1 for IN transfers
+				    rx_data, // address of receive data buffer
+				    64, // Size of data buffer
+				    &rcvd_bytes, // Number of bytes actually received
+				    0 // Timeout in milliseconds (0 to disable timeout)
+				    );
+	}
+}
