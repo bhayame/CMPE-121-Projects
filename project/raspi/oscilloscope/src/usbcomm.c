@@ -14,8 +14,7 @@
 #include "scope.h"
 
 
-void USB_Start(){
-	libusb_device_handle* dev; // Pointer to data structure representing USB device
+int USB_Start(libusb_device_handle* dev){
 	libusb_init(NULL); // Initialize the LIBUSB library
 
 	// Open the USB device (the Cypress device has
@@ -24,16 +23,19 @@ void USB_Start(){
   
 	if (dev == NULL){
 		perror("device not found\n");
+		return 1;
 	}
 
 	// Reset the USB device.
 	if (libusb_reset_device(dev) != 0){
 		perror("Device reset failed\n");
+		return 1;
 	} 
 
 	// Set configuration of USB device
 	if (libusb_set_configuration(dev, 1) != 0){
 		perror("Set configuration failed\n");
+		return 1;
 	} 
 
 
@@ -41,10 +43,12 @@ void USB_Start(){
 	// issued to the USB device.
 	if (libusb_claim_interface(dev, 0) !=0){
 		perror("Cannot claim interface");
+		return 1;
 	}
+	return 0;
 }
 
-USB_GetBlock(int channelNumber, char* rx_data[]){
+void USB_GetBlock(libusb_device_handle* dev int channelNumber, char* rx_data[]){
 	int return_val, rcvd_bytes;
 	
 	if(channelNumber == 1){
