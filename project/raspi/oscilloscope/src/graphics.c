@@ -30,11 +30,11 @@ void grid (VGfloat x, VGfloat y, int xdiv, int ydiv, int width, int height){
     VGfloat ix, iy;		//Indices for x and y
     Stroke(128, 128, 128, 0.5); // Set color
     StrokeWidth(2); // Set width of lines
-    for(ix=x, ix<=x+width, i+=width/xdiv){
-	Line(ix, y, ix, y+height)		//Draw vertical lines from the x index at y=0 to y=height
+    for(ix=x; ix<=x+width; ix+=width/xdiv){
+	Line(ix, y, ix, y+height);		//Draw vertical lines from the x index at y=0 to y=height
 	}
-    for(ix=x, ix<=x+width, i+=width/xdiv){
-	Line(x, iy, x+width, iy)		//Draw horizontal lines from the y index at x=0 to x=width
+    for(iy=y; iy<=y+height; iy+=height/ydiv){
+	Line(x, iy, x+width, iy);		//Draw horizontal lines from the y index at x=0 to x=width
 	}	
 }
 
@@ -59,7 +59,7 @@ void drawBackground(int width, int height, int xdiv, int ydiv, int margin){
 void printScaleSettings(int xscale, int yscale, int xposition, int yposition, VGfloat textColor[4]){
     char str[100];
 
-    setfill(tcolor);
+    setfill(textColor);
     if (xscale >= 1000){
 	sprintf(str, "X scale = %0d ms/div", xscale/1000);		//Convert anything over 1000 us (1 ms)
     }
@@ -85,11 +85,11 @@ void processSamples(int *data, int nsamples, int xstart, int xfinish, float ysca
     }	
 }
 
-void plotWave(data_point *data, int nsamples, int yoffset, VGfloat linecolor[4]){
+void plotWave(data_point *data, int nsamples, int yoffset, VGfloat lineColor[4]){
     data_point p;
     VGfloat x1, y1, x2, y2;
 
-    Stroke(linecolor[0], linecolor[1], linecolor[2], linecolor[3]);		//Set wave color to linecolor
+    Stroke(lineColor[0], lineColor[1], lineColor[2], lineColor[3]);		//Set wave color to linecolor
     StrokeWidth(4);
 
     p = data[0];		//Set processed first data point to p
