@@ -1,8 +1,10 @@
 /*
 Brandon Hayame
 bhayame@ucsc.edu
+* 
+* This file contains the cmdParse() function which parses command line arguments to myscope using
+* the getopt() function in <unistd.h>
 */
-
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,5 +1,7 @@
 /* Brandon Hayame
  * bhayame@ucsc.edu
+ * 
+ * This file contains the graphics library for myscope
  * */
 
 #include <stdio.h>

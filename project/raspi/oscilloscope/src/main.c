@@ -74,7 +74,6 @@ int main(int argc, char* argv[]){
 	End();
 	
 	for(;;){
-		printf("here!\n");
 		if(strcmp(userParameters.mode, "free") ==0){
 			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data FREELY */
 			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data FREELY */

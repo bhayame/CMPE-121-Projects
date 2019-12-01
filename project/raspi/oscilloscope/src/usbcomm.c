@@ -1,5 +1,7 @@
 /* Brandon Hayame
  * bhayame@ucsc.edu
+ * 
+ * This file provides functions to initialize the USB link and receive 64-byte blocks from the USB.
  * */
 
 #include <stdio.h>
