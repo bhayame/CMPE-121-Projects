@@ -9,7 +9,6 @@
 #include <unistd.h>
 #include <termios.h>
 #include <errno.h>
-#include <libusb.h>
 
 #include "scope.h"
 
@@ -22,7 +21,7 @@ int USB_Start(libusb_device_handle* dev){
 	dev = libusb_open_device_with_vid_pid(NULL, 0x04B4, 0x8051);
   
 	if (dev == NULL){
-		perror("device not found\n");
+		perror("Device not found\n");
 		return 1;
 	}
 
@@ -48,14 +47,14 @@ int USB_Start(libusb_device_handle* dev){
 	return 0;
 }
 
-void USB_GetBlock(libusb_device_handle* dev int channelNumber, char* rx_data[]){
+void USB_GetBlock(libusb_device_handle* dev, int channelNumber, char* rx_data[]){
 	int return_val, rcvd_bytes;
 	
 	if(channelNumber == 1){
 		return_val = libusb_bulk_transfer(dev, // Handle for the USB device
 					(0x01 | 0x80), // Address of the Endpoint in USB device
 				    // MS bit nust be 1 for IN transfers
-				    rx_data, // address of receive data buffer
+				    *rx_data, // address of receive data buffer
 				    64, // Size of data buffer
 				    &rcvd_bytes, // Number of bytes actually received
 				    0 // Timeout in milliseconds (0 to disable timeout)
@@ -65,7 +64,7 @@ void USB_GetBlock(libusb_device_handle* dev int channelNumber, char* rx_data[]){
 		return_val = libusb_bulk_transfer(dev, // Handle for the USB device
 					(0x02 | 0x80), // Address of the Endpoint in USB device
 				    // MS bit nust be 1 for IN transfers
-				    rx_data, // address of receive data buffer
+				    *rx_data, // address of receive data buffer
 				    64, // Size of data buffer
 				    &rcvd_bytes, // Number of bytes actually received
 				    0 // Timeout in milliseconds (0 to disable timeout)

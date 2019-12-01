@@ -7,9 +7,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
-#include <shapes.h>
-#include <fontinfo.h>
-#include <math.h>
 
 #include "scope.h"
 

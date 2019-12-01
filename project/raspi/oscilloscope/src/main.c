@@ -32,6 +32,7 @@ int main(int argc, char* argv[]){
 	data_point channel1_points[10000];	//Channel 1 proccessed data
 	data_point channel2_points[10000];	//Channel 2 proccessed data
 	
+	VGfloat textcolor[4] = {0, 200, 200, 0.5}; // Color for displaying text
 	VGfloat wave1color[4] = {240, 0, 0, 0.5}; // Color for displaying Channel 1 data
     VGfloat wave2color[4] = {200, 200, 0, 0.5}; // Color for displaying Channel 2 data
 	
@@ -53,7 +54,7 @@ int main(int argc, char* argv[]){
     }
     
 	libusb_device_handle *dev;
-	if (USB_Start(dev); != 0){		//Start USB Configuration
+	if (USB_Start(dev) != 0){		//Start USB Configuration
 		perror("USB configuration failed\n");
 		return 1;
 	}
@@ -81,7 +82,7 @@ int main(int argc, char* argv[]){
 		Start(width, height);
 		
 		drawBackground(width, height, xdiv, ydiv, margin);
-		printScaleSettings(xscale, yscale, width-300, height-50, textcolor);
+		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
 		
 		pot1_data = wiringPiI2CRead(fd);
 		pot2_data = wiringPiI2CRead(fd);
