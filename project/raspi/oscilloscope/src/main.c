@@ -53,8 +53,8 @@ int main(int argc, char* argv[]){
 		return 1;
     }
     
-	libusb_device_handle *dev;
-	if (USB_Start(dev) != 0){		//Start USB Configuration
+	libusb_device_handle **dev;
+	if (USB_Start(*dev) != 0){		//Start USB Configuration
 		perror("USB configuration failed\n");
 		return 1;
 	}
@@ -96,5 +96,5 @@ int main(int argc, char* argv[]){
 	restoreterm();
 	finish();
 	
-	libusb_close(dev);	//Close USB device when finished
+	libusb_close(*dev);	//Close USB device when finished
 }
