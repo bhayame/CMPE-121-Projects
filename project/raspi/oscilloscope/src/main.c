@@ -26,18 +26,17 @@ int main(int argc, char* argv[]){
 	
 	int samples_per_screen;	//Number of samples neeeded to populate screen
 	
-	int channel1_data[10000]; // Data samples from Channel 1
-	int channel2_data[10000]; // Data samples from Channel 2
+	int channel1_data[100000]; // Data samples from Channel 1
+	int channel2_data[100000]; // Data samples from Channel 2
 
-	data_point channel1_points[10000];	//Channel 1 proccessed data
-	data_point channel2_points[10000];	//Channel 2 proccessed data
+	data_point channel1_points[100000];	//Channel 1 proccessed data
+	data_point channel2_points[100000];	//Channel 2 proccessed data
 	
 	VGfloat textcolor[4] = {0, 200, 200, 0.5}; // Color for displaying text
 	VGfloat wave1color[4] = {240, 0, 0, 0.5}; // Color for displaying Channel 1 data
     VGfloat wave2color[4] = {200, 200, 0, 0.5}; // Color for displaying Channel 2 data
 	
 	scopeParameters userParameters;		//Struct to store user scope parameters from cmdargs
-	
 	if (cmdParse(&userParameters, argc, argv) != 0){	//Populate userParameters with arguments and check for success
 		return 1;
 	}
@@ -59,19 +58,15 @@ int main(int argc, char* argv[]){
 		perror("USB configuration failed\n");
 		return 1;
 	}
-	
+	*/
 	samples_per_screen = (userParameters.xscale * userParameters.sampleRate * xdiv / 1000);		//Calculate # of samples needed to populate screen
 	
 	/* SEND I2C COMMAND TO SET SAMPLE RATE AND START SAMPLING */
 	
 	saveterm(); // Save current screen
 	init(&width, &height); // Initialize display and get width and height
-	Start(width, height);
 	rawterm(); // Needed to receive control characters from keyboard, such as ESC
 	
-	drawBackground(width, height, xdiv, ydiv, margin);
-	printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
-	End();
 	
 	for(;;){
 		if(strcmp(userParameters.mode, "free") ==0){
@@ -85,12 +80,21 @@ int main(int argc, char* argv[]){
 		
 		pot1_data = wiringPiI2CRead(fd);
 		pot2_data = wiringPiI2CRead(fd);
-    
-		/* PROGRAM SEGFAULTS HERE *//*
-		processSamples(channel1_data, samples_per_screen, 0, width, userParameters.yscale, channel1_points);
-		processSamples(channel2_data, samples_per_screen, 0, width, userParameters.yscale, channel2_points);
+
+		processSamples(channel1_data, samples_per_screen, margin, width-2*margin, userParameters.yscale, channel1_points);
+		processSamples(channel2_data, samples_per_screen, margin, width-2*margin, userParameters.yscale, channel2_points);
+		
+		WindowClear();
+		Start(width, height);
+		
+		drawBackground(width, height, xdiv, ydiv, margin);
+		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
+		
 		plotWave(channel1_points, samples_per_screen, pot1_data, wave1color);		
-		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);*/
+		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);
+		
+		End();
+		sleep(1);
 	}
 	waituntil(0x1b); // Wait for user to press ESC or RET key
 	restoreterm();
