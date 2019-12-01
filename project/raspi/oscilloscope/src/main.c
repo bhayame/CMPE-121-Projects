@@ -54,6 +54,7 @@ int main(int argc, char* argv[]){
     }
     
 	libusb_device_handle **dev;
+	/*
 	if (USB_Start(*dev) != 0){		//Start USB Configuration
 		perror("USB configuration failed\n");
 		return 1;
@@ -68,7 +69,12 @@ int main(int argc, char* argv[]){
 	Start(width, height);
 	rawterm(); // Needed to receive control characters from keyboard, such as ESC
 	
+	drawBackground(width, height, xdiv, ydiv, margin);
+	printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
+	End();
+	
 	for(;;){
+		printf("here!\n");
 		if(strcmp(userParameters.mode, "free") ==0){
 			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data FREELY */
 			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data FREELY */
@@ -78,19 +84,14 @@ int main(int argc, char* argv[]){
 			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data USING TRIGGER */
 		}
 		
-		WindowClear();
-		Start(width, height);
-		
-		drawBackground(width, height, xdiv, ydiv, margin);
-		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
-		
 		pot1_data = wiringPiI2CRead(fd);
 		pot2_data = wiringPiI2CRead(fd);
     
+		/* PROGRAM SEGFAULTS HERE *//*
 		processSamples(channel1_data, samples_per_screen, 0, width, userParameters.yscale, channel1_points);
 		processSamples(channel2_data, samples_per_screen, 0, width, userParameters.yscale, channel2_points);
 		plotWave(channel1_points, samples_per_screen, pot1_data, wave1color);		
-		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);
+		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);*/
 	}
 	waituntil(0x1b); // Wait for user to press ESC or RET key
 	restoreterm();
