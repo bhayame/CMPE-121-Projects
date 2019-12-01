@@ -64,7 +64,7 @@ void printScaleSettings(int xscale, int yscale, int xposition, int yposition, VG
 	sprintf(str, "X scale = %0d us/div", xscale);
     }
     Text(xposition, yposition, str, SansTypeface, 18);			//Print str at xposition, yposition
-    sprintf(str, "Y scale = %3.2f V/div", yscale * 0.25);
+    sprintf(str, "Y scale = %3.2f V/div", yscale * 0.001);
     Text(xposition, yposition-50, str, SansTypeface, 18);		//Print str 50 below yposition of previous str
 }
 
