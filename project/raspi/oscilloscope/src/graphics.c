@@ -71,13 +71,13 @@ void printScaleSettings(int xscale, int yscale, int xposition, int yposition, VG
 }
 
 //Convert array of 8-bit samples into x and y values scalable to display
-void processSamples(int data[], int nsamples, int xstart, int xfinish, float yscale, data_point point_array[]){
+void processSamples(int data[], int nsamples, int xstart, int xfinish, int height, int ydiv, float yscale, data_point point_array[]){
     VGfloat x1, y1;
     data_point p;
 
     for (int i=0; i<nsamples; i++){
 	x1 = xstart + (xfinish-xstart)*i/nsamples;	//Divide x values into evenly spaced samples from start to finish
-	y1 = data[i] * 5 * yscale/256;			//Scale 8-bit data value appropriate grid divider based on yscale
+	y1 = (data[i] * 5 * yscale/256) * ((height / ydiv) / (yscale/1000)) ;				//Pixels per volt = (pixels per div) / (volts/div)
 	p.x = x1;
 	p.y = y1;
 	point_array[i] = p;

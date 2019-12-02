@@ -81,8 +81,8 @@ int main(int argc, char* argv[]){
 		pot1_data = wiringPiI2CRead(fd);
 		pot2_data = wiringPiI2CRead(fd);
 
-		processSamples(channel1_data, samples_per_screen, margin, width-2*margin, userParameters.yscale, channel1_points);
-		processSamples(channel2_data, samples_per_screen, margin, width-2*margin, userParameters.yscale, channel2_points);
+		processSamples(channel1_data, samples_per_screen, margin, width-2*margin, height, ydiv, userParameters.yscale, channel1_points);
+		processSamples(channel2_data, samples_per_screen, margin, width-2*margin, height, ydiv userParameters.yscale, channel2_points);
 		
 		WindowClear();
 		Start(width, height);
