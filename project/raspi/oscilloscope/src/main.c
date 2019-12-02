@@ -70,8 +70,8 @@ int main(int argc, char* argv[]){
 	
 	for(;;){
 		if(strcmp(userParameters.mode, "free") ==0){
-			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data FREELY */
-			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data FREELY */
+			freeSweep(dev, 1, samples_per_screen, channel1_data);
+			freeSweep(dev, 2, samples_per_screen, channel2_data);
 		}
 		if(strcmp(userParameters.mode, "trigger") ==0){
 			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data USING TRIGGER */

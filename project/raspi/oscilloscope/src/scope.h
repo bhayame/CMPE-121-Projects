@@ -47,6 +47,6 @@ void USB_GetBlock(libusb_device_handle* dev, int channelNumber, char* rx_data[])
 
 
 //Function definitions for data.c
-int triggerSweep(char* data[], char* triggerSlope, int triggerLevel, int* returnArray[]);
+int triggerSweep(char data[], char triggerSlope, int triggerLevel, int* returnArray[]);
 
-int freeSweep(libusb_device_handle* dev, char* data[], int channelNumber, int nSamples, int* returnArray[]);
+int freeSweep(libusb_device_handle* dev, int channelNumber, int nSamples, int* returnArray[]);
