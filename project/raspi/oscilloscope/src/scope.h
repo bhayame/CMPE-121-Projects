@@ -35,7 +35,7 @@ void drawBackground(int width, int height, int xdiv, int ydiv, int margin);
 
 void printScaleSettings(int xscale, int yscale, int xposition, int yposition, VGfloat textColor[4]);
 
-void processSamples(int data[], int nsamples, int xstart, int xfinish, int height, int ydiv, float yscale, data_point point_array[]);
+void processSamples(int data[], int nsamples, int xstart, int xfinish, float yscale, data_point point_array[]);
 
 void plotWave(data_point data[], int nsamples, int yoffset, VGfloat lineColor[4]);
 
@@ -43,10 +43,10 @@ void plotWave(data_point data[], int nsamples, int yoffset, VGfloat lineColor[4]
 //Function definitions for usbcomm.c
 int USB_Start(libusb_device_handle* dev);
 
-void USB_GetBlock(libusb_device_handle* dev, int channelNumber, char* rx_data[]);
+void USB_GetBlock(libusb_device_handle* dev, int channelNumber, char rx_data[]);
 
 
 //Function definitions for data.c
-int triggerSweep(char data[], char triggerSlope, int triggerLevel, int* returnArray[]);
+int triggerSweep(char data[], char triggerSlope[], int triggerLevel, int returnArray[]);
 
-int freeSweep(libusb_device_handle* dev, int channelNumber, int nSamples, int* returnArray[]);
+int freeSweep(libusb_device_handle* dev, int channelNumber, int nSamples, int returnArray[]);
