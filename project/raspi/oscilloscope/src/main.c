@@ -51,9 +51,9 @@ int main(int argc, char* argv[]){
 		perror("I2C device not found\n");
 		return 1;
     }
-    
+
 	libusb_device_handle *dev;
-	if (USB_Start(dev) != 0){		//Start USB Configuration
+	if (USB_Start(&dev) != 0){		//Start USB Configuration
 		perror("USB configuration failed\n");
 		return 1;
 	}
@@ -77,11 +77,19 @@ int main(int argc, char* argv[]){
 	for (k=0;k<100000;k++){
 		channel1_data[k] = k%255;
 	}
+
+	int rx_data[64];
+	USB_GetBlock(&dev, 1, rx_data);
+	int i;
+	for(i=0;i<64;i++){
+		printf("rx_data[%d] = %d\n", i, rx_data[i]);
+	}
 	
 	for(;;){
 		if(strcmp(userParameters.mode, "free") ==0){
-			freeSweep(dev, 1, samples_per_screen, channel1_data);
-			freeSweep(dev, 2, samples_per_screen, channel2_data);
+			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data USING FREE */
+			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data USING FREE */
+
 		}
 		if(strcmp(userParameters.mode, "trigger") ==0){
 			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data USING TRIGGER */
