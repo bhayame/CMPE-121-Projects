@@ -72,7 +72,12 @@ void USB_GetBlock(libusb_device_handle** dev, int channelNumber, int rx_data[]){
 				    0 // Timeout in milliseconds (0 to disable timeout)
 				    );
 	}
-	for(i=0;i<64;i++){
-		rx_data[i] = unconvertedData[i];	//Conversion from char array to int array
+	if(return_val == 0){
+		for(i=0;i<64;i++){
+			rx_data[i] = unconvertedData[i];	//Conversion from char array to int array
+		}
+	}
+	else{
+		printf("ERROR: libusb_bulk_transfer() failed\n");
 	}
 }

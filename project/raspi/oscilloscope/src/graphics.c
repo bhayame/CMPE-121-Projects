@@ -98,7 +98,7 @@ void plotWave(data_point data[], int nsamples, int yoffset, VGfloat lineColor[4]
     for (int i=1; i< nsamples; i++){	//Draw line from last point to next
 	p = data[i];
 	x2 = p.x;
-	y2 = p.y + yoffset;
+	y2 = p.y + (yoffset*5);
 	Line(x1, y1, x2, y2);
 	x1 = x2;
 	y1 = y2;

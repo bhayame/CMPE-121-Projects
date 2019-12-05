@@ -44,3 +44,6 @@ void plotWave(data_point data[], int nsamples, int yoffset, VGfloat lineColor[4]
 int USB_Start(libusb_device_handle** dev);
 
 void USB_GetBlock(libusb_device_handle** dev, int channelNumber, int rx_data[]);
+
+//Function definitions for data.c
+void freeSweep(libusb_device_handle* dev, int channelNumber, int nSamples, int channelData[]);

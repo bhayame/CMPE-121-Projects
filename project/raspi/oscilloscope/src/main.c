@@ -52,7 +52,7 @@ int main(int argc, char* argv[]){
 		return 1;
     }
 
-	libusb_device_handle *dev;
+	libusb_device_handle* dev;
 	if (USB_Start(&dev) != 0){		//Start USB Configuration
 		perror("USB configuration failed\n");
 		return 1;
@@ -72,28 +72,32 @@ int main(int argc, char* argv[]){
 	int pixels_per_volt = (ylimit-ystart)/((ydiv * userParameters.yscale)/1000);
 	
 	rawterm(); // Needed to receive control characters from keyboard, such as ESC
-	
+
 	int k;
 	for (k=0;k<100000;k++){
 		channel1_data[k] = k%255;
 	}
-
+/*
 	int rx_data[64];
 	USB_GetBlock(&dev, 1, rx_data);
 	int i;
 	for(i=0;i<64;i++){
 		printf("rx_data[%d] = %d\n", i, rx_data[i]);
 	}
+*/
 	
 	for(;;){
+		WindowClear();
+		Start(width, height);
+		
+		drawBackground(width, height, xdiv, ydiv, margin);
+		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
+		
 		if(strcmp(userParameters.mode, "free") ==0){
-			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data USING FREE */
-			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data USING FREE */
 
 		}
 		if(strcmp(userParameters.mode, "trigger") ==0){
-			/* COLLECT  samples_per_screen SAMPLES INTO channel1_data USING TRIGGER */
-			/* COLLECT  samples_per_screen SAMPLES INTO channel2_data USING TRIGGER */
+			
 		}
 		
 		pot1_data = wiringPiI2CRead(fd);
@@ -101,12 +105,6 @@ int main(int argc, char* argv[]){
 
 		processSamples(channel1_data, samples_per_screen, margin, width-2*margin, pixels_per_volt, channel1_points);
 		processSamples(channel2_data, samples_per_screen, margin, width-2*margin, pixels_per_volt, channel2_points);
-		
-		WindowClear();
-		Start(width, height);
-		
-		drawBackground(width, height, xdiv, ydiv, margin);
-		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
 		
 		plotWave(channel1_points, samples_per_screen, pot1_data, wave1color);		
 		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);
