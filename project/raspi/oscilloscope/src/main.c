@@ -72,11 +72,15 @@ int main(int argc, char* argv[]){
 	int pixels_per_volt = (ylimit-ystart)/((ydiv * userParameters.yscale)/1000);
 	
 	rawterm(); // Needed to receive control characters from keyboard, such as ESC
-
+/*
 	int k;
 	for (k=0;k<100000;k++){
 		channel1_data[k] = k%255;
+		channel2_data[k] = k%128;
 	}
+*/
+	
+	
 /*
 	int rx_data[64];
 	USB_GetBlock(&dev, 1, rx_data);
@@ -94,7 +98,8 @@ int main(int argc, char* argv[]){
 		printScaleSettings(userParameters.xscale, userParameters.yscale, width-300, height-50, textcolor);
 		
 		if(strcmp(userParameters.mode, "free") ==0){
-
+			freeSweep(dev, 1, samples_per_screen,channel1_data);
+			freeSweep(dev, 2, samples_per_screen,channel2_data);
 		}
 		if(strcmp(userParameters.mode, "trigger") ==0){
 			
@@ -108,7 +113,7 @@ int main(int argc, char* argv[]){
 		
 		plotWave(channel1_points, samples_per_screen, pot1_data, wave1color);		
 		plotWave(channel2_points, samples_per_screen, pot2_data, wave2color);
-		
+		sleep(1);
 		End();
 	}
 	waituntil(0x1b); // Wait for user to press ESC or RET key

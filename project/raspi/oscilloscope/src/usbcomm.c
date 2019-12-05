@@ -59,7 +59,7 @@ void USB_GetBlock(libusb_device_handle** dev, int channelNumber, int rx_data[]){
 				    unconvertedData, // address of receive data buffer
 				    64, // Size of data buffer
 				    &rcvd_bytes, // Number of bytes actually received
-				    0 // Timeout in milliseconds (0 to disable timeout)
+				    1 // Timeout in milliseconds (0 to disable timeout)
 				    );
 	}
 	else if(channelNumber == 2){
@@ -69,7 +69,7 @@ void USB_GetBlock(libusb_device_handle** dev, int channelNumber, int rx_data[]){
 				    unconvertedData, // address of receive data buffer
 				    64, // Size of data buffer
 				    &rcvd_bytes, // Number of bytes actually received
-				    0 // Timeout in milliseconds (0 to disable timeout)
+				    1 // Timeout in milliseconds (0 to disable timeout)
 				    );
 	}
 	if(return_val == 0){
@@ -79,5 +79,6 @@ void USB_GetBlock(libusb_device_handle** dev, int channelNumber, int rx_data[]){
 	}
 	else{
 		printf("ERROR: libusb_bulk_transfer() failed\n");
+		printf("return_val = %d\n", return_val);
 	}
 }

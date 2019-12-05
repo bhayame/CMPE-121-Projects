@@ -19,7 +19,6 @@ void freeSweep(libusb_device_handle* dev, int channelNumber, int nSamples, int c
 	USB_GetBlock(&dev, channelNumber, data);
 	for(i=0; i<nSamples;){
 		channelData[i] = data[j];
-		printf("channelData[%d] = %d, data[%d] = %d\n", i, channelData[i], j, data[j]);
 		i++;
 		j++;
 		if(j == 64){
