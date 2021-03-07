@@ -1,7 +1,5 @@
 # CMPE 121L Fall 2019 Repository
 
-Contains academic projects from CMPE121 (Microprocessor System Design), including the Dual-Channel Digital Oscilloscope proejct.
-
 
 # Directories
 
